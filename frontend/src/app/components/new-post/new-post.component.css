@@ -1,0 +1,18 @@
+.post-container{
+    padding: 15px 27px;
+    border-radius: 15px;
+}
+
+.post-textarea::placeholder {
+    color: #fff; 
+  }
+.post-textarea {
+    color: white;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }

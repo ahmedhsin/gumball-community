@@ -1,19 +1,28 @@
-<div class="post-container">
-    <div class="post-heading">
-        <app-avatar [img]="post.author.img"></app-avatar>
-        <div>
-            <h4 class="author-name">{{post.author.name}}</h4>
-            <p class="time">{{post.time}}</p>
+<div class="post-container bg-secondary">
+    <div class="row mb-3 justify-content-between align-items-center">
+        <div class="col">
+            <div class="user-section d-flex gap-2">
+                <img src="assets/images/profile.png" class="avatar-img img-fluid" alt="" srcset="">
+                <div class="info d-flex flex-column gap-1">
+                    <span>Ahmed Mubarak</span>
+                    <span>2024/10/12</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-1">
+            <span class="fs-2">
+                <i class="fa-solid fa-xmark"></i>
+            </span>
         </div>
     </div>
-    
-    <div class="post-body">
-        <p>
-            {{post.content}}
-        </p>
+    <div class="row gap-2">
+        <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis enim id explicabo dolores debitis mollitia eum nobis architecto voluptatibus, earum accusantium illum sapiente fuga in voluptate dignissimos. Adipisci, odit aperiam?</div>
+        <img src="assets/images/post-img.png" alt="" class="img-fluid">
     </div>
-
-    <div class="comments-container">
-        <input type="text" name="comment" id="comment" [(ngModel)]="comment" placeholder="Write your comment">
+    <hr>
+    <div class="row justify-content-around align-items-center">
+        <div class="col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>React</div>
+        <div class="col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Comment</div>
+        <div class="col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Share</div>
     </div>
 </div>
