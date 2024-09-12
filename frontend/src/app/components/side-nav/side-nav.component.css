@@ -1,0 +1,21 @@
+.Navbar-container{
+
+    height: 100vh;
+    width: 25vh;
+    padding: auto;
+    border-radius: 15px; 
+}
+.btn-custom {
+    background-color:transparent;  
+    color: white;               
+    text-align: left;           
+    width: 100%;               
+}
+
+.btn-custom:hover {
+    background-color: rgba(89, 88, 140, 0.5); 
+    color: white;               
+}
+
+
+

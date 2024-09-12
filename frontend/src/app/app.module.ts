@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommentComponent,
     SideNavComponent,
     HeaderComponent,
-    AvatarComponent
+    AvatarComponent,
+    ChatsBoxComponent
   ],
   imports: [
     BrowserModule,
