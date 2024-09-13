@@ -19,6 +19,8 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BioComponent } from './components/bio/bio.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
+import { LoginDataComponent } from './components/login-data/login-data.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { ProfileHeaderComponent } from './components/profile-header/profile-head
     AddCommentComponent,
     ProfileComponent,
     ProfileHeaderComponent,
-    BioComponent
+    BioComponent,
+    LoginDataComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,

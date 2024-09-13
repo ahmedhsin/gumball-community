@@ -1,0 +1,19 @@
+
+.triangle-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-bottom: 100vh solid #59588C; /* Adjust the color as needed */
+    border-right: 100vw solid transparent;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    color: #000;
+    text-align: center;
+}
