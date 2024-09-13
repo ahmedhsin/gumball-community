@@ -18,6 +18,12 @@ body {
 .pointer{
     cursor: pointer;
 }
+.fixed{
+    position: fixed;
+}
+.z-999{
+    z-index: 999;
+}
 
 input,
 button,
