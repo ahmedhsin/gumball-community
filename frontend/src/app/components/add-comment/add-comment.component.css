@@ -1,0 +1,17 @@
+.sub-comment{
+    border-radius: 15px;
+    background-color: #3C3A65;
+}
+.comment-textarea::placeholder {
+    color: #fff; 
+  }
+.comment-textarea {
+    color: white;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }

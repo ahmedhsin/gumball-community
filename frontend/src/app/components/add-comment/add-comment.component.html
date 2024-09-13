@@ -1,0 +1,14 @@
+<div class="container comment-container my-2">
+    <div class="row">
+        <div class="vertical-line"></div>
+        <div class="col-2">
+            <img src="assets/images/profile.png" class="img-fluid avatar-img" alt="">
+        </div>
+        <div class="col-10 py-2 sub-comment">
+            <textarea #replyInput class="comment-textarea" name="" id="" placeholder="Add Comment!"></textarea>
+            <div class="d-flex justify-content-end">
+                <button (click)="addReply(parentComment, replyInput.value)" class="btn btn-primary">Comment</button>
+            </div>
+        </div>
+    </div>
+</div>

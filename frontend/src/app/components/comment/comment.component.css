@@ -1,0 +1,26 @@
+.sub-comment{
+    border-radius: 15px;
+    background-color: #3C3A65;
+}
+.replay{
+    cursor: pointer;
+}
+
+.vertical-line{
+    border-left: 1px solid white;
+    height: 90px;
+    width: 1px;
+    bottom: 0px;
+    position: absolute;
+    left: 25px;
+    border-bottom: 0px solid white;
+
+}
+
+.sub-comment-section{
+    bottom: -15px;
+}
+
+.row{
+    position: relative;
+}
