@@ -1,0 +1,11 @@
+.custom {
+    border-radius: 10px;
+    background-color: #3c3964 !important;
+}
+
+@media (min-width: 768px) {
+  .custom {
+    max-width: 40% !important;
+    min-width: 35% !important;
+  }
+}
