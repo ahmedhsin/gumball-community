@@ -1,12 +1,11 @@
-.post-container{
-    padding: 15px 27px;
+.sub-comment{
     border-radius: 15px;
+    background-color: #3C3A65;
 }
-
-.post-textarea::placeholder {
+.comment-textarea::placeholder {
     color: #fff; 
   }
-.post-textarea {
+.comment-textarea {
     color: white;
     width: 100%;
     border: none;
