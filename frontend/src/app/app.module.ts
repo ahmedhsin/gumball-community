@@ -13,8 +13,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
 import { ReactComponent } from './components/react/react.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     SideNavComponent,
     HeaderComponent,
     AvatarComponent,
+    ChatsBoxComponent,
     ReactComponent,
     AddCommentComponent
   ],

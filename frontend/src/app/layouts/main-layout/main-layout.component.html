@@ -2,12 +2,17 @@
     <!-- TODO: Add app-header -->
     <app-header></app-header>
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-7 d-flex flex-column gap-3">
+        <div class="col-2">
+            <app-side-nav></app-side-nav>
+        </div>
+        <div class="col-6 d-flex flex-column gap-3">
             <app-new-post></app-new-post>
             <app-post></app-post>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3 d-flex flex-column ms-auto">
+            <app-chats-box></app-chats-box>
+        </div>
+        
     </div>
     <!-- TODO: Add app-sidenav -->
     <router-outlet></router-outlet>
