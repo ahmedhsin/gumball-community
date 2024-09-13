@@ -1,38 +1,26 @@
+<div class="profile-header">
+    <div class="cover-container position-relative">
+        <img class="cover img-fluid" src="assets/images/post-img.png" alt="cover" />
 
-    <div class="profile-header">
-        <div class="cover-container">
-          <img class="cover" src="assets/images/post-img.png" alt="cover">
-        </div>
-
-        <div class="overlay-div">
-            <div class="user-info">
-                <div class="profile-pic-container">
-                    <img class="profile-pic" src="/images/cat.png" alt="profile">
-                </div>   
-                <div class="name-div" >
-                    <h1 class="name" style="margin-bottom: 10px;">{{name}}</h1>
-                    <span>{{username}}</span>
-                </div> 
+        <div class="overlay-div col-2 position-absolute bottom-0 end-0 p-3">
+            <div class="user-info d-flex align-items-center">
+                <img src="assets/images/profile.png" class="avatar-img img-fluid profile-pic me-3" alt="profile image">
+                <div class="name-div">
+                    <h1 class="name mb-1">{{ name }}</h1>
+                    <span>{{ username }}</span>
+                </div>
             </div>
-            <div class="follow-message-buttons">
-               <div class="follow-button">
-                    <svg class="f-icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 0.5C4.477 0.5 0 4.977 0 10.5C0 16.023 4.477 20.5 10 20.5C15.523 20.5 20 16.023 20 10.5C20 4.977 15.523 0.5 10 0.5ZM15 11.5H11V15.5H9V11.5H5V9.5H9V5.5H11V9.5H15V11.5Z" fill="white"/>
-                    </svg>
-                    <span>follow</span>
-               </div>
-               <div class="message-button">
-                    <svg class="m-icon" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 6.5V14.5C0 15.0304 0.210714 15.5391 0.585786 15.9142C0.960859 16.2893 1.46957 16.5 2 16.5H18C18.5304 16.5 19.0391 16.2893 19.4142 15.9142C19.7893 15.5391 20 15.0304 20 14.5V6.5L10 10.5L0 6.5Z" fill="white"/>
-                        <path d="M2 0.5C1.46957 0.5 0.960859 0.710714 0.585786 1.08579C0.210714 1.46086 0 1.96957 0 2.5L0 4.5L10 8.5L20 4.5V2.5C20 1.96957 19.7893 1.46086 19.4142 1.08579C19.0391 0.710714 18.5304 0.5 18 0.5H2Z" fill="white"/>
-                    </svg>
 
-                    <span>message</span>
-               </div>
-            </div>
-        
+            <div class="follow-message-buttons col-7 d-flex justify-content-end mt-3">
+                <button class="btn follow-button d-flex align-items-center me-2">
+                    <i class="fa-regular fa-heart me-2"></i>
+                    Follow
+                </button>
+                <button class="btn message-button d-flex align-items-center">
+                    <i class="fa-regular fa-message me-2"></i>
+                    Message
+                </button>
+            </div>            
         </div>
-        
     </div>
-
-
+</div>
