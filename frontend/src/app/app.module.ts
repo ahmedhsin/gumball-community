@@ -16,6 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
 import { ReactComponent } from './components/react/react.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { BioComponent } from './components/bio/bio.component';
+import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     AvatarComponent,
     ChatsBoxComponent,
     ReactComponent,
-    AddCommentComponent
+    AddCommentComponent,
+    ProfileComponent,
+    ProfileHeaderComponent,
+    BioComponent
   ],
   imports: [
     BrowserModule,
