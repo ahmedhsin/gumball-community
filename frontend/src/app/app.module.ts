@@ -14,6 +14,9 @@ import { AvatarComponent } from './components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
+import { ReactComponent } from './components/react/react.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
     SideNavComponent,
     HeaderComponent,
     AvatarComponent,
-    ChatsBoxComponent
+    ChatsBoxComponent,
+    ReactComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule,
