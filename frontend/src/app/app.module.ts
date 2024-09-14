@@ -21,8 +21,8 @@ import { BioComponent } from './components/bio/bio.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { LoginDataComponent } from './components/login-data/login-data.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { SignupPageComponent } from './signup-page/signup-page.component';
-import { SignupInputComponent } from './signup-input/signup-input.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
+import { SignupInputComponent } from './components/signup-input/signup-input.component';
 
 
 @NgModule({
