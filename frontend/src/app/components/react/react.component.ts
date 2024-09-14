@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-react',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./react.component.css']
 })
 export class ReactComponent {
-
+  @Input() setReact:any;
+  @Input() post:any;
+  
 }

@@ -3,10 +3,10 @@
     <div class="row mb-3 justify-content-between align-items-center">
         <div class="col">
             <div class="user-section d-flex gap-2">
-                <img src="assets/images/profile.png" class="avatar-img img-fluid" alt="" srcset="">
+                <img src="{{post.profile}}" class="avatar-img img-fluid" alt="" srcset="">
                 <div class="info d-flex flex-column gap-1">
-                    <span>Ahmed Mubarak</span>
-                    <span>2024/10/12</span>
+                    <span>{{post.name}}</span>
+                    <span>{{post.date}}</span>
                 </div>
             </div>
         </div>
@@ -17,25 +17,29 @@
         </div>
     </div>
     <div class="row gap-2">
-        <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis enim id explicabo dolores debitis mollitia eum nobis architecto voluptatibus, earum accusantium illum sapiente fuga in voluptate dignissimos. Adipisci, odit aperiam?</div>
-        <img src="assets/images/post-img.png" alt="" class="img-fluid">
+        <div class="col">{{post.content}}</div>
+        <img src="{{post.image}}" alt="" class="img-fluid">
     </div>
     <hr>
+    <app-reaction-list [reactions]="post.reactions"></app-reaction-list>
     <div class="row justify-content-around align-items-center">
-        <div (click)="toggleReact()" class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>React</div>
+        <div (click)="toggleReact()" class="pointer col-3 align-items-center">
+            <img *ngIf="post.react" src="assets/images/{{post.react}}.png" class="img-fluid self-react">
+            <span *ngIf="!post.react"><i class="fa-regular fa-heart mx-1"></i>React</span>
+        </div>
         <div (click)="toggleComments()" class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Comment</div>
         <div class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Share</div>
     </div>
-    <div *ngIf="isReactVisible">
-        <app-react></app-react>
+    <div *ngIf="isReactVisible" (click)="toggleReact()">
+        <app-react [setReact]="setReact" [post]="post"></app-react>
     </div>
 
 </div>
 
 
 <div *ngIf="isCommentsVisible" class="comments">
-    <app-add-comment [addReply]="addComment" [parentComment]="comments"></app-add-comment>
-    <div *ngFor="let comment of comments">
+    <app-add-comment [addReply]="addComment" [parentComment]="post.comments"></app-add-comment>
+    <div *ngFor="let comment of post.comments">
         <div class="comment">
         <app-comment [comment]="comment"></app-comment>
 
