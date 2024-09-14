@@ -20,7 +20,7 @@ const routes: Routes = [
         component: ProfileComponent
       }
     ]
-    
+
   }
   ,{
     path :'login',

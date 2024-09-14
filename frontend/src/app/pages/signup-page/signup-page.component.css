@@ -13,7 +13,7 @@ background-color: transparent;
     border-right: 100vw solid transparent;
 }
 .margin-top {
-    margin-top: 110px; 
+    margin-top: 50px;
     margin-left: auto;
 }
 
@@ -24,7 +24,7 @@ background-color: transparent;
  }
 
  .btn-primary {
-   
+
     height: 50px;
     width: 200px;
 }
