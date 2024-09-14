@@ -1,0 +1,32 @@
+
+.triangle-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-bottom: 100vh solid #59588C; /* Adjust the color as needed */
+    border-right: 100vw solid transparent;
+}
+
+
+.img {
+    width: 550px;
+    height: 550px;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+ }
+
+
+ .btn-primary {
+   
+    height: 50px;
+    width: 200px;
+}
+
+.margin-top {
+    margin-top: 110px; 
+    margin-left: auto;
+}
+
+

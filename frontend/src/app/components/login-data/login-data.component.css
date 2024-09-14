@@ -1,0 +1,22 @@
+.user-name{
+
+    border-radius: 10px;
+    background-color: #3c3964
+}
+.input-group {
+    background-color:rgba(89, 88, 140, 0.5);  
+    color: white;               
+    text-align: left;           
+    width: 250px;   
+    border: white;
+    border: solid 1px;
+    border-radius: 15px;
+    
+  
+               
+}
+
+.input-group:hover {
+    background-color: rgba(89, 88, 140, 0.5); 
+    color: white;               
+}
