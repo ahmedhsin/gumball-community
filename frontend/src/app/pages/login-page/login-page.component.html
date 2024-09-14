@@ -1,0 +1,25 @@
+<div class="col-12 triangle-background margin-top">
+    <div class="container">
+        <div class="row align-items-start">
+            <!-- Left side: Signup Form -->
+            <div class="col-md-6 d-flex position-relative flex-column align-items-start">
+                <h1>Welcome Dude!<br>Login to the amazing world!</h1>
+                <div class="col-12 d-flex flex-column align-items-start mt-5">
+                    <app-login-data></app-login-data>
+                    <div class="d-flex flex-column align-items-start mt-3">
+                        <h6>
+                            <span class="opacity-50 me-2">Don’t have an account?</span> 
+                            <a routerLink="/signup" class="btn">Signup</a>
+                          </h6>
+                        <div class="d-flex justify-content-end mt-3"> 
+                            <button [routerLink]="['/home']" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+        <div class="col-md-6 position-relative d-flex justify-content-end align-items-start">
+            <img src="assets/images/Login.jpeg" alt="" class="img">
+        </div>
+    </div>
+</div>
