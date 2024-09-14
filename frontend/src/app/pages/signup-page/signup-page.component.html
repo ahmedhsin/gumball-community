@@ -1,9 +1,10 @@
+
 <div class="container triangle-background">
     <div class="row align-items-start ">
         <div class="col-md-6 d-flex position-relative flex-column align-items-start">
             <h1 class="my-5">Welcome Dude!<br>SignUp to the amazing world!</h1>
             <div class="col-12 d-flex flex-column align-items-start mt-5">
-                <app-signup-input></app-signup-input>
+                <app-signup-input (signupinput)="onSignup($event)"></app-signup-input>
                 <div class="d-flex flex-column align-items-start mt-3">
                     <h6>
                         <span class="opacity-50 me-2">Already have an account ? </span>
@@ -15,7 +16,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 position-relative d-flex justify-content-end align-items-start">
             <img src="assets/images/Login.jpeg" alt="" class="img">
         </div>

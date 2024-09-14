@@ -3,7 +3,7 @@
         <div class="col-md-6 d-flex position-relative flex-column align-items-start">
             <h1 class="my-5">Welcome Dude!<br>Login to the amazing world!</h1>
             <div class="col-12 d-flex flex-column align-items-start mt-5">
-                <app-login-data></app-login-data>
+                <app-login-data (loginData)="onLogin($event)"></app-login-data>
                 <div class="d-flex flex-column align-items-start mt-3">
                     <h6>
                         <span class="opacity-50 me-2">Don’t have an account?</span> 
