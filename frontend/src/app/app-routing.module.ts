@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 const routes: Routes = [
   {
@@ -17,12 +18,17 @@ const routes: Routes = [
       {
         path:"profile",
         component: ProfileComponent
-      },{
-        path :'login',
-        component:LoginPageComponent
       }
     ]
     
+  }
+  ,{
+    path :'login',
+    component:LoginPageComponent
+  },
+  {
+    path: 'signup',
+    component: SignupPageComponent
   }
 ];
 

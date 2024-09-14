@@ -3,15 +3,20 @@
     border-radius: 10px;
     background-color: #3c3964
 }
-.btn-custom {
+.input-group {
     background-color:rgba(89, 88, 140, 0.5);  
     color: white;               
     text-align: left;           
-    width: 100%;   
-    border: white;            
+    width: 250px;   
+    border: white;
+    border: solid 1px;
+    border-radius: 15px;
+    
+  
+               
 }
 
-.btn-custom:hover {
+.input-group:hover {
     background-color: rgba(89, 88, 140, 0.5); 
     color: white;               
 }
