@@ -8,61 +8,7 @@ import { Component, Input } from '@angular/core';
 export class PostComponent {
   @Input() post: any = {}
 
-  comments = [
-    {
-      img: 'assets/images/profile.png',
-      name: 'John Doe',
-      comment: 'Nice post!',
-      date: '3 hours ago',
-      subComments: [],
-      showSubComments: false,
-      showReplyForm: false
-    },
-    {
-      img: 'assets/images/profile.png',
-      name: 'Ahmed Doe',
-      comment: 'Nahhhhhh post!',
-      date: '3 hours ago',
-      subComments: [
-        {
-          img: 'assets/images/profile.png',
-          name: 'Ahmed Doe',
-          comment: 'Nahhhhhh post!',
-          date: '3 hours ago',
-          subComments: [
-            {
-              img: 'assets/images/profile.png',
-              name: 'Deo John',
-              comment: 'Blablalba post!',
-              date: '3 hours ago',
-              subComments: [],
-              showSubComments: false,
-              showReplyForm: false
-            }
-          ]
-        },
-        {
-          img: 'assets/images/profile.png',
-          name: 'Deo John',
-          comment: 'Blablalba post!',
-          date: '3 hours ago',
-          subComments: [],
-          showSubComments: false,
-          showReplyForm: false
-        }
-      ]
-    },
-    {
-      img: 'assets/images/profile.png',
-      name: 'Deo John',
-      comment: 'Blablalba post!',
-      date: '3 hours ago',
-      subComments: [],
-      showSubComments: false,
-      showReplyForm: false
-    }
-  ]
-
+  
   isReactVisible = false;
   isCommentsVisible = false;
   toggleReact() {
@@ -87,13 +33,17 @@ export class PostComponent {
       showReplyForm: false
     })
   }
-
-  addReact(react: any){
-    this.post.reacts.push({
-      img: 'assets/images/profile.png',
-      name: 'Imposter John',
-      react: react,
-    })
+  setReact(react: any){
+    if(this.post.react){
+      this.post.reactions[this.post.react] -= 1;
+    }
+    if (this.post.react == react){
+      this.post.react = null;
+    }else{
+      this.post.react = react;
+      this.post.reactions[react] += 1;
+    }
+    
   }
 
 }
