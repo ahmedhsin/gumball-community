@@ -1,13 +1,12 @@
 <div class="container">
     <div>
         <app-profile-header></app-profile-header>
-        <div class="row mt-3">
-          
-            <div class="col-4">
-                <app-bio></app-bio>
-            </div>
-            <div class="col-8">
-                <app-new-post></app-new-post>
+        <!-- Grid container for aligning bio and new post -->
+        <div class="row mt-3 row-gap-3">
+            <app-bio class="col-12 col-lg-4"></app-bio>
+            <app-new-post class="col-12 col-lg-8"></app-new-post>
+            <div class="col-12 col-lg-8 mx-auto">
+                <app-post></app-post>
             </div>
         </div>
     </div>

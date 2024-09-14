@@ -88,4 +88,12 @@ export class PostComponent {
     })
   }
 
+  addReact(react: any){
+    this.post.reacts.push({
+      img: 'assets/images/profile.png',
+      name: 'Imposter John',
+      react: react,
+    })
+  }
+
 }
