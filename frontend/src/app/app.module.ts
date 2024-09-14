@@ -23,6 +23,7 @@ import { LoginDataComponent } from './components/login-data/login-data.component
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { SignupInputComponent } from './components/signup-input/signup-input.component';
+import { ReactionListComponent } from './components/reaction-list/reaction-list.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { SignupInputComponent } from './components/signup-input/signup-input.com
     LoginDataComponent,
     LoginPageComponent,
     SignupPageComponent,
-    SignupInputComponent
+    SignupInputComponent,
+    ReactionListComponent
   ],
   imports: [
     BrowserModule,
