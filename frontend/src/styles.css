@@ -24,7 +24,10 @@ body {
 .z-999{
     z-index: 999;
 }
-
+a{
+    text-decoration: none;
+    color: white;
+}
 input,
 button,
 textarea,

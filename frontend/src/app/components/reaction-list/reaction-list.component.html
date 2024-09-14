@@ -1,0 +1,8 @@
+<div class="d-flex align-items-center">
+    <div *ngFor="let react of getReacts()">
+        <div *ngIf="reactions[react] > 0">
+          <img src="assets/images/{{react}}.png" class="img-fluid react" alt="Reaction {{ react }}">
+          <span>{{ reactions[react] }}</span>
+        </div>
+    </div>
+</div>
