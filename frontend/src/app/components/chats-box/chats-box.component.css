@@ -1,7 +1,7 @@
 .Chatsbox-container{
-  height: 100vh;
+  height: 80vh;
   padding: auto;
-  border-radius: 15px; 
+  border-radius: 15px;
 }
 
 .chats{
@@ -31,4 +31,11 @@ font-size: 24px;
     color: white;
     width: 100%;
 
+}
+
+.custom-scrollbar {
+    overflow-y: scroll;
+    height: 400px;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(89, 88, 140) #e0e0e0;
 }

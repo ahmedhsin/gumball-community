@@ -1,15 +1,12 @@
 .Navbar-container{
-
-    height: 100vh;
-    width: 25vh;
-    padding: auto;
+    height: 80vh;
     border-radius: 15px; 
 }
 .btn-custom {
-    background-color:transparent;  
-    color: white;               
-    text-align: left;           
-    width: 100%;               
+    background-color:transparent;
+    color: white;
+    text-align: left;
+    width: 100%;
 }
 
 .btn-custom:hover {

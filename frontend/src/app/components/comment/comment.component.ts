@@ -24,4 +24,27 @@ export class CommentComponent {
     });
     comment.showReplyForm = false;
   }
+
+  isEditingComment: boolean = false;
+  currentComment: any;
+
+  startEditing(comment: any) {
+    this.currentComment = { ...comment }; 
+    this.isEditingComment = true;
+  }
+
+  handleUpdateComment(updatedComment: any) {
+    if (updatedComment === 'delete') {
+      document.querySelector('.container')?.classList.add('d-none');
+      this.isEditingComment = false;
+    }else if (updatedComment) {
+      this.comment = updatedComment;
+      this.comment.date = 'now';
+    }
+    this.isEditingComment = false; 
+  }
+
+  cancelEdit() {
+    this.isEditingComment = false; 
+  }
 }
