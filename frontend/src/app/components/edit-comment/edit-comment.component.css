@@ -1,0 +1,21 @@
+.comment-container{
+    padding: 15px 27px;
+    border-radius: 15px;
+    margin: 20px 10px;
+    
+}
+
+textarea {
+    color: white;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  
+textarea::placeholder {
+color: #fff;
+}

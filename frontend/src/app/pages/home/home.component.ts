@@ -153,6 +153,26 @@ export class HomeComponent implements OnInit {
     }
   ]
 
+  handleNewPost(postData: any) {
+    const post = {
+      name:"Ahmed Mubarak",
+      react:null,
+      reactions:{
+        1:0,
+        2:0,
+        3:0,
+        4:0,
+        5:0
+      },
+      date: "two hours ago",
+      content:postData.content,
+      image:postData.image,
+      profile:"assets/images/profile.png",
+      comments: []
+    }
+
+    this.posts.unshift(post);
+  }
   constructor(private postService: PostService) { }
   
   ngOnInit(): void {

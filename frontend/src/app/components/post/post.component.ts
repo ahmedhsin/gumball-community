@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-post',
@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class PostComponent {
   @Input() post: any = {}
-
   
   isReactVisible = false;
   isCommentsVisible = false;
@@ -45,5 +44,18 @@ export class PostComponent {
     }
     
   }
+  
+  isEditing: boolean = false;
 
+  handleUpdate(updatedPost: any) {
+    if (updatedPost) {
+      this.post = updatedPost;
+    }
+    this.isEditing = false; // Hide the edit form
+  }
+
+  startEditing(post: any) {
+    this.post = post;
+    this.isEditing = true;
+  }
 }
