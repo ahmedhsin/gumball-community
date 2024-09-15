@@ -48,7 +48,7 @@ namespace SocialMediaApp.Data
                 .HasMany(p => p.Reactions)
                 .WithOne(r => r.Post)
                 .HasForeignKey(r => r.PostId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -58,7 +58,7 @@ namespace SocialMediaApp.Data
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -68,7 +68,7 @@ namespace SocialMediaApp.Data
             .WithOne(c => c.ParentComment) 
             .HasForeignKey(c => c.ParentCommentId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
 
             // Follewer<---->>Followed (m--->n)

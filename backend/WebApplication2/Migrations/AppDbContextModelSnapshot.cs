@@ -216,12 +216,12 @@ namespace SocialMediaApp.Migrations
                     b.HasOne("SocialMediaApp.Models.Comment", "ParentComment")
                         .WithMany("SubComments")
                         .HasForeignKey("ParentCommentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("SocialMediaApp.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Author");
 
@@ -252,7 +252,7 @@ namespace SocialMediaApp.Migrations
                     b.HasOne("SocialMediaApp.Models.Post", "Post")
                         .WithMany("Reactions")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
