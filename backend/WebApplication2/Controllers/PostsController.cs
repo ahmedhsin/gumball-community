@@ -5,7 +5,7 @@ using SocialMediaApp.Data;
 using SocialMediaApp.Models;
 using SocialMediaApp.Models.SocialMediaApp.Models;
 using SocialMediaApp.ViewModels;
-
+using SocialMediaApp.Controllers;
 namespace SocialMediaApp.Controllers
 {
     [Route("api/[controller]")]
@@ -136,20 +136,72 @@ namespace SocialMediaApp.Controllers
 
 
 
+
         [HttpDelete("{Id}")]
         public async Task<ActionResult> DeletePost([FromRoute] int Id)
         {
-            var post = await dbContext.Posts.FindAsync(Id);
+            var post = await dbContext.Posts
+                                      .Include(p => p.Comments)
+                                      .ThenInclude(c => c.SubComments)
+                                      .Include(p => p.Reactions)
+               
+                                      .FirstOrDefaultAsync(p => p.Id == Id);
+
 
             if (post == null)
             {
                 return NotFound("No Posts found.");
             }
 
-            // Use Entity Framework Remove method to handle cascade delete
-            dbContext.Posts.Remove(post);
-            await dbContext.SaveChangesAsync(); // This will trigger the cascade delete
+            // Manually delete reactions
+            if(post.Reactions!=null)
+            dbContext.Reactions.RemoveRange(post.Reactions);
 
+            // Manually delete comments and subcomments
+            if (post.Comments != null)
+            {
+                foreach (var comment in post.Comments)
+                {
+                    await DeleteCommentRecursive(comment);
+                }
+            }
+
+            // Remove the post after removing related entities
+            dbContext.Posts.Remove(post);
+            await dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+        async Task DeleteCommentRecursive(Comment comment)
+        {
+            // If the comment has subcomments, recursively delete them
+            if (comment.SubComments != null && comment.SubComments.Any())
+            {
+                foreach (var subComment in comment.SubComments)
+                {
+                    // Load subcomments of the current subcomment
+                    await dbContext.Entry(subComment).Collection(c => c.SubComments).LoadAsync();
+
+                    // Recursively delete each subcomment
+                    await DeleteCommentRecursive(subComment);
+                }
+            }
+
+            // Remove the current comment
+            dbContext.Comments.Remove(comment);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePost(int id, [FromBody] String content)
+        {
+            var post = await dbContext.Posts.FindAsync(id);
+            if (post == null)
+            {
+                return NotFound("Post not found");
+            }
+
+            post.Content = content;
+            await dbContext.SaveChangesAsync();
             return Ok();
         }
 

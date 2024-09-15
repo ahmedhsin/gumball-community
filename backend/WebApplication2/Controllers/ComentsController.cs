@@ -28,6 +28,8 @@ namespace SocialMediaApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+
             var comment = new Comment
             {
                 AuthorId = model.AuthorId,
@@ -63,16 +65,39 @@ namespace SocialMediaApp.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult> DeleteComment([FromRoute] int Id)
         {
-            var comment = await dbContext.Comments.FindAsync(Id);
+            // Find the comment including its subcomments
+            var comment = await dbContext.Comments.Include(c => c.SubComments).FirstOrDefaultAsync(c => c.Id == Id);
 
             if (comment == null)
             {
                 return NotFound("No Comments found.");
             }
 
-            // Use Entity Framework Remove method to handle cascade delete
-            dbContext.Comments.Remove(comment);
-            await dbContext.SaveChangesAsync(); // This will trigger the cascade delete
+            // Recursive function to delete a comment and its subcomments
+            async Task DeleteCommentRecursive(Comment comment)
+            {
+                // If the comment has subcomments, recursively delete them
+                if (comment.SubComments != null && comment.SubComments.Any())
+                {
+                    foreach (var subComment in comment.SubComments)
+                    {
+                        // Load subcomments of the current subcomment
+                        await dbContext.Entry(subComment).Collection(c => c.SubComments).LoadAsync();
+
+                        // Recursively delete each subcomment
+                        await DeleteCommentRecursive(subComment);
+                    }
+                }
+
+                // Remove the current comment
+                dbContext.Comments.Remove(comment);
+            }
+
+            // Call the recursive delete function starting with the root comment
+            await DeleteCommentRecursive(comment);
+
+            // Save changes after deleting the hierarchy
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }

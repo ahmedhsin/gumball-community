@@ -25,39 +25,43 @@ namespace SocialMediaApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var react = new Reaction
+             var checkreact = await dbContext.Reactions
+                .FirstOrDefaultAsync(r => r.AuthorId == model.AuthorId && r.PostId == model.PostId);
+
+            if (checkreact != null)
             {
+                if (checkreact.ReactionType == model.ReactionType)
+                {
+                    dbContext.Reactions.Remove(checkreact);
+                    await dbContext.SaveChangesAsync();
+                    return Ok($"You have deleted The Reaction ");
 
-                AuthorId = model.AuthorId,
-                PostId = model.PostId,
-                ReactionType = model.ReactionType,
-          
-            };
+                }
+                else
+                {
+                    checkreact.ReactionType = model.ReactionType;
+                    await dbContext.SaveChangesAsync();
+                    return Ok($"You have updated The Reaction ");
 
-            dbContext.Reactions.Add(react);
-            await dbContext.SaveChangesAsync();
+                }
 
-            return Ok(react.Id);
-
-
-        }
-
-
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteReact([FromRoute] int Id)
-        {
-            var React = await dbContext.Reactions.FindAsync(Id);
-
-            if (React == null)
-            {
-                return NotFound("No Reactions found.");
             }
+            else
+            {
+                var react = new Reaction
+                {
 
-            // Use Entity Framework Remove method to handle cascade delete
-            dbContext.Reactions.Remove(React);
-            await dbContext.SaveChangesAsync(); // This will trigger the cascade delete
+                    AuthorId = model.AuthorId,
+                    PostId = model.PostId,
+                    ReactionType = model.ReactionType,
 
-            return Ok();
+                };
+
+                dbContext.Reactions.Add(react);
+                await dbContext.SaveChangesAsync();
+                return Ok($"You have added a new Reaction {react.Id}");
+
+            }
         }
     }
 }
