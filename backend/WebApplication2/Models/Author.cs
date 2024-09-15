@@ -24,9 +24,6 @@
             public ICollection<AuthorFollow> FollowerAuthors { get; set; }
 
 
-
-            //  public byte[] ProfilePicture { get; set; }
-            //public byte[] CoverPicture { get; set; }
         }
     }
 }

@@ -57,22 +57,17 @@ namespace SocialMediaApp.Data
             .HasMany(p => p.Comments)
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
 
-
-            // Comment,Reaction 1--->m
-            modelBuilder.Entity<Comment>()
-            .HasMany(c => c.Reactions)
-            .WithOne(r => r.Comment)
-            .HasForeignKey(r => r.CommentId)
-            .OnDelete(DeleteBehavior.Cascade);
 
             // Comment, subcomments (self Realationship) (1--->m)
             modelBuilder.Entity<Comment>()
             .HasMany(c => c.SubComments) 
             .WithOne(c => c.ParentComment) 
             .HasForeignKey(c => c.ParentCommentId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
 
