@@ -1,4 +1,5 @@
 <div class="post-container bg-secondary my-4 bg-opacity-50">
+    <app-edit-post *ngIf="isEditing" [post]="post" (updatePost)="handleUpdate($event)"></app-edit-post>
 
     <div class="row mb-3 justify-content-between align-items-center">
         <div class="col">
@@ -11,8 +12,8 @@
             </div>
         </div>
         <div class="col-1">
-            <span class="fs-2">
-                <i class="fa-solid fa-xmark"></i>
+            <span class="fs-2 pointer">
+                <i class="fa-solid fa-ellipsis-vertical" (click)="startEditing(post)"></i>
             </span>
         </div>
     </div>
@@ -70,3 +71,4 @@
     </div>
 </div>
 </ng-template>
+

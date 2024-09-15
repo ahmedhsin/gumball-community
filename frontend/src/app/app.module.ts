@@ -24,6 +24,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { SignupInputComponent } from './components/signup-input/signup-input.component';
 import { ReactionListComponent } from './components/reaction-list/reaction-list.component';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ReactionListComponent } from './components/reaction-list/reaction-list.
     LoginPageComponent,
     SignupPageComponent,
     SignupInputComponent,
-    ReactionListComponent
+    ReactionListComponent,
+    EditPostComponent,
+    EditCommentComponent
   ],
   imports: [
     BrowserModule,

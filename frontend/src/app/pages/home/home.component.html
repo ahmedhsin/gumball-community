@@ -14,7 +14,7 @@
         </div>
         <div class="col-12 col-lg-7 d-flex flex-column gap-3  ">
 
-            <app-new-post></app-new-post>
+            <app-new-post (newPost)="handleNewPost($event)"></app-new-post>
             <div *ngFor="let post of posts">
                 <app-post [post]="post"></app-post>
             </div>

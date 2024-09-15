@@ -1,12 +1,11 @@
-.post-container{
+/* edit-post.component.css */
+.post-container {
     padding: 15px 27px;
     border-radius: 15px;
-}
-
-.post-textarea::placeholder {
-    color: #fff; 
+    margin: 20px 10px;
   }
-.post-textarea {
+  
+  .post-textarea {
     color: white;
     width: 100%;
     border: none;
@@ -16,8 +15,11 @@
     box-sizing: border-box;
     transition: background-color 0.3s ease;
   }
-
-
+  
+  .post-textarea::placeholder {
+    color: #fff;
+  }
+  
   .file-upload label {
     cursor: pointer;
     display: flex;
@@ -33,3 +35,4 @@
   #file-input {
     display: none;
   }
+  
