@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post';
+import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  isAuthenticated = this.authService.isAuthenticated;
   posts: Post[] = [
     {
       name:"Ahmed Mubarak",
@@ -173,8 +174,7 @@ export class HomeComponent implements OnInit {
 
     this.posts.unshift(post);
   }
-  constructor(private postService: PostService) { }
-  
+  constructor(private postService: PostService, private authService: AuthService) { }
   ngOnInit(): void {
     this.postService.getPosts().subscribe((res: any) => {
       this.posts = [...res]
