@@ -19,11 +19,10 @@ namespace SocialMediaApp.Models
         [ForeignKey("ParentCommentId")]
         public Comment ParentComment { get; set; }
 
-        public ICollection<Comment> SubComments { get; set; }
+        public ICollection<Comment>? SubComments { get; set; }=new List<Comment>();
 
         [ForeignKey("PostId")]
         public  Post Post { get; set; }
 
-        public ICollection<Reaction> Reactions { get; set; }
     }
 }

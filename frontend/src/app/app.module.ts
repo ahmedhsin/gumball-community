@@ -12,20 +12,19 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ChatsBoxComponent } from './components/chats-box/chats-box.component';
 import { ReactComponent } from './components/react/react.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BioComponent } from './components/bio/bio.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
-import { LoginDataComponent } from './components/login-data/login-data.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
-import { SignupInputComponent } from './components/signup-input/signup-input.component';
 import { ReactionListComponent } from './components/reaction-list/reaction-list.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
+import { JwtInterceptor } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -45,10 +44,8 @@ import { EditCommentComponent } from './components/edit-comment/edit-comment.com
     ProfileComponent,
     ProfileHeaderComponent,
     BioComponent,
-    LoginDataComponent,
     LoginPageComponent,
     SignupPageComponent,
-    SignupInputComponent,
     ReactionListComponent,
     EditPostComponent,
     EditCommentComponent
@@ -59,7 +56,9 @@ import { EditCommentComponent } from './components/edit-comment/edit-comment.com
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

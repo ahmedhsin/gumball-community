@@ -48,7 +48,7 @@ namespace SocialMediaApp.Data
                 .HasMany(p => p.Reactions)
                 .WithOne(r => r.Post)
                 .HasForeignKey(r => r.PostId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -57,23 +57,18 @@ namespace SocialMediaApp.Data
             .HasMany(p => p.Comments)
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
 
 
-
-            // Comment,Reaction 1--->m
-            modelBuilder.Entity<Comment>()
-            .HasMany(c => c.Reactions)
-            .WithOne(r => r.Comment)
-            .HasForeignKey(r => r.CommentId)
-            .OnDelete(DeleteBehavior.Cascade);
 
             // Comment, subcomments (self Realationship) (1--->m)
             modelBuilder.Entity<Comment>()
             .HasMany(c => c.SubComments) 
             .WithOne(c => c.ParentComment) 
             .HasForeignKey(c => c.ParentCommentId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
 
 
             // Follewer<---->>Followed (m--->n)

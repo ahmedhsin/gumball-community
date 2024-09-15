@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,18 +8,24 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  constructor(private authService: AuthService) {}
-
-   onLogin(data: {username: string, password: string}) {
-    this.authService.login(data.username, data.password).subscribe(
+  constructor(private authService: AuthService, private router:Router) {}
+  email: string = '';
+  password: string = '';
+   onLogin() {
+    this.authService.login(this.email, this.password).subscribe(
       response => {
-        // Handle login success
-        console.log('Login successful', response);
+        this.router.navigate(['/']);
       },
       error => {
-        // Handle login error
+        alert('wrong Credintals')
         console.error('Login error', error);
       }
     );
+  }
+
+  ngOnInit(): void {
+    if(this.authService.isAuthenticated){
+      this.authService.logout();
+    }
   }
 }

@@ -9,11 +9,10 @@ namespace SocialMediaApp.Models
     {
         public int Id { get; set; }
         public required int AuthorId { get; set; }
-        public  int? PostId { get; set; }
-        public int? CommentId { get; set; }
+        public  int PostId { get; set; }
 
-        public required DateTime CreatedAt { get; set; }
-        public required ReactionType React { get; set; }
+       // public required DateTime CreatedAt { get; set; }
+        public required int ReactionType  { get; set; }
 
        
         [ForeignKey("AuthorId")]
@@ -21,8 +20,7 @@ namespace SocialMediaApp.Models
 
         [ForeignKey("PostId")]
         public Post Post { get; set; }
-        [ForeignKey("CommentId")]
-        public Comment Comment { get; set; }
+
 
     }
 }

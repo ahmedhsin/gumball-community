@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,24 +7,31 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  author: any;
+  @Input() author: any; // Accept author as an input
+  isAuthenticated: boolean;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.isAuthenticated = this.authService.isAuthenticated;
+  }
 
   ngOnInit(): void {
     console.log('HeaderComponent ngOnInit called'); // Debug log
 
-    // Use mock data for testing
-    this.author = {
+    // Mock data for testing
+    this.author = this.author || {
       name: 'John Doe',
       image: 'assets/images/profile.png'
     };
 
-    // If using the real service later, uncomment the lines below
+    // Uncomment to use real service data
     /*
     this.authService.getAuthor().subscribe(data => {
       this.author = data;
     });
     */
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
