@@ -16,4 +16,9 @@ export class AuthService {
   signup(username:string ,Firstname :string,Lastname :string,Email:string, password:string): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, { username,Firstname,Lastname,Email, password });
   }
+
+  getAuthor(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+
   }

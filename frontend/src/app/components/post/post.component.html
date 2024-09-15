@@ -1,74 +1,77 @@
 <div class="post-container bg-secondary my-4 bg-opacity-50">
-    <app-edit-post *ngIf="isEditing" [post]="post" (updatePost)="handleUpdate($event)"></app-edit-post>
+  <app-edit-post *ngIf="isEditing" [post]="post" (updatePost)="handleUpdate($event)"></app-edit-post>
 
-    <div class="row mb-3 justify-content-between align-items-center">
-        <div class="col">
-            <div class="user-section d-flex gap-2">
-                <img src="{{post.profile}}" class="avatar-img img-fluid" alt="" srcset="">
-                <div class="info d-flex flex-column gap-1">
-                    <span>{{post.name}}</span>
-                    <span>{{post.date}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-1">
-            <span class="fs-2 pointer">
-                <i class="fa-solid fa-ellipsis-vertical" (click)="startEditing(post)"></i>
-            </span>
-        </div>
-    </div>
-    <div class="row gap-2">
-        <div class="col">{{post.content}}</div>
-        <img src="{{post.image}}" alt="" class="img-fluid">
-    </div>
-    <hr>
-    <app-reaction-list [reactions]="post.reactions"></app-reaction-list>
-    <div class="row justify-content-around align-items-center">
-        <div (click)="toggleReact()" class="pointer col-3 align-items-center">
-            <img *ngIf="post.react" src="assets/images/{{post.react}}.png" class="img-fluid self-react">
-            <span *ngIf="!post.react"><i class="fa-regular fa-heart mx-1"></i>React</span>
-        </div>
-        <div (click)="toggleComments()" class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Comment</div>
-        <div class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Share</div>
-    </div>
-    <div *ngIf="isReactVisible" (click)="toggleReact()">
-        <app-react [setReact]="setReact" [post]="post"></app-react>
-    </div>
-
+  <div class="row mb-3 justify-content-between align-items-center">
+      <div class="col">
+          <div class="user-section d-flex gap-2">
+              <img src="{{post.profile}}" class="avatar-img img-fluid" alt="" srcset="">
+              <div class="info d-flex flex-column gap-1">
+                  <span>{{post.name}}</span>
+                  <span>{{post.date}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-1">
+          <span class="fs-2 pointer">
+              <i class="fa-solid fa-ellipsis-vertical" (click)="startEditing(post)"></i>
+          </span>
+      </div>
+  </div>
+  <div class="row gap-2">
+      <div class="col">{{post.content}}</div>
+      <img src="{{post.image}}" alt="" class="img-fluid">
+  </div>
+  <hr>
+  <app-reaction-list [reactions]="post.reactions"></app-reaction-list>
+  <!-- Center the buttons using flex utilities -->
+  <div class="row justify-content-center align-items-center">
+      <div (click)="toggleReact()" class="pointer col-3 text-center">
+          <img *ngIf="post.react" src="assets/images/{{post.react}}.png" class="img-fluid self-react">
+          <span *ngIf="!post.react">
+              <i class="fa-solid fa-thumbs-up mx-1"></i>React
+          </span>
+      </div>
+      <div (click)="toggleComments()" class="pointer col-3 text-center">
+          <i class="fa-solid fa-comment mx-1"></i>Comment
+      </div>
+      <div class="pointer col-3 text-center">
+          <i class="fa-solid fa-share mx-1"></i>Share
+      </div>
+  </div>
+  <div *ngIf="isReactVisible" (click)="toggleReact()">
+      <app-react [setReact]="setReact" [post]="post"></app-react>
+  </div>
 </div>
-
 
 <div *ngIf="isCommentsVisible" class="comments">
-    <app-add-comment [addReply]="addComment" [parentComment]="post.comments"></app-add-comment>
-    <div *ngFor="let comment of post.comments">
-        <div class="comment">
-        <app-comment [comment]="comment"></app-comment>
+  <app-add-comment [addReply]="addComment" [parentComment]="post.comments"></app-add-comment>
+  <div *ngFor="let comment of post.comments">
+      <div class="comment">
+          <app-comment [comment]="comment"></app-comment>
 
-        <span class="ms-4  pointer" *ngIf="comment.subComments.length > 0" (click)="toggleSubComments(comment)">
-            {{ comment.showSubComments ? 'Hide all replay' : 'View all replay' }}
-        </span>
-    
-        <div *ngIf="comment.showSubComments" class="sub-comments ms-5">
-            <ng-container *ngTemplateOutlet="nestedComments; context: { $implicit: comment.subComments }"></ng-container>
-        </div>
-        </div>
-    </div>
+          <span class="ms-4 pointer" *ngIf="comment.subComments.length > 0" (click)="toggleSubComments(comment)">
+              {{ comment.showSubComments ? 'Hide all replies' : 'View all replies' }}
+          </span>
+
+          <div *ngIf="comment.showSubComments" class="sub-comments ms-5">
+              <ng-container *ngTemplateOutlet="nestedComments; context: { $implicit: comment.subComments }"></ng-container>
+          </div>
+      </div>
+  </div>
 </div>
-  
+
 <ng-template #nestedComments let-subComments>
-<div *ngFor="let subComment of subComments">
-    <div class="comment">
-    <app-comment [comment]="subComment" ></app-comment>
+  <div *ngFor="let subComment of subComments">
+      <div class="comment">
+          <app-comment [comment]="subComment"></app-comment>
 
+          <span class="ms-4 pointer" *ngIf="subComment.subComments.length > 0" (click)="toggleSubComments(subComment)">
+              {{ subComment.showSubComments ? 'Hide all replies' : 'View all replies' }}
+          </span>
 
-    <span class="ms-4 pointer" *ngIf="subComment.subComments.length > 0" (click)="toggleSubComments(subComment)">
-        {{ subComment.showSubComments ? 'Hide all replay' : 'View All replay' }}
-    </span>
-
-    <div *ngIf="subComment.showSubComments" class="sub-comments ms-5">
-        <ng-container *ngTemplateOutlet="nestedComments; context: { $implicit: subComment.subComments }"></ng-container>
-    </div>
-    </div>
-</div>
+          <div *ngIf="subComment.showSubComments" class="sub-comments ms-5">
+              <ng-container *ngTemplateOutlet="nestedComments; context: { $implicit: subComment.subComments }"></ng-container>
+          </div>
+      </div>
+  </div>
 </ng-template>
-
