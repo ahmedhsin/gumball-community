@@ -1,16 +1,32 @@
 <div class="container triangle-background">
     <div class="row align-items-start">
+        
         <div class="col-md-6 d-flex position-relative flex-column align-items-start">
             <h1 class="my-5">Welcome Dude!<br>Login to the amazing world!</h1>
             <div class="col-12 d-flex flex-column align-items-start mt-5">
-                <app-login-data (loginData)="onLogin($event)"></app-login-data>
+                
+
+
+                <div class="input-holder">
+                    <div class="input-group mb-4">
+                      <span class="input-group-text"><i class="fa-regular fa-heart me-2"></i></span>
+                      <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="email" required>
+                    </div>
+                    <div class="input-group mb-4">
+                      <span class="input-group-text"><i class="fa-regular fa-heart me-2"></i></span>
+                      <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Password" required>
+                    </div>
+                  </div>
+                  
+
+
                 <div class="d-flex flex-column align-items-start mt-3">
                     <h6>
                         <span class="opacity-50 me-2">Don’t have an account?</span> 
                         <a routerLink="/signup" class="btn">Signup</a>
                         </h6>
                     <div class="d-flex justify-content-end mt-3"> 
-                        <button [routerLink]="['/home']" class="btn btn-primary">Login</button>
+                        <button class="btn btn-primary" (click)="onLogin()">Login</button>
                     </div>
                 </div>
             </div>

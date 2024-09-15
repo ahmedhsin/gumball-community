@@ -7,18 +7,32 @@ import { Component } from '@angular/core';
   styleUrls: ['./signup-page.component.css']
 })
 export class SignupPageComponent {
-  constructor (private authservice:AuthService){}
-
-    onSignup(data: {username:string ,Firstname :string,Lastname :string,email:string, password:string}) {
-      this.authservice.signup(data.username,data.Firstname,data.Lastname,data.email, data.password).subscribe(
+  constructor (private authService:AuthService){}
+  username: string = '';
+  Firstname : string='';
+  Lastname :string ='';
+  email : string ='';
+  password: string = '';
+    onSignup() {
+      this.authService.siginUp({
+        username: this.username,
+        Firstname: this.Firstname,
+        Lastname: this.Lastname,
+        email: this.email,
+        password: this.password
+      }).subscribe(
         response => {
-          // Handle login success
           console.log('Signup successful', response);
         },
         error => {
-          // Handle login error
           console.error('Signup error', error);
         }
       );
+    }
+
+    ngOnInit(): void {
+      if(this.authService.isAuthenticated){
+        this.authService.logout();
+      }
     }
 }
