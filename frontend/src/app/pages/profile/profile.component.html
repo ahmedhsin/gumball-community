@@ -1,12 +1,12 @@
 <div class="container">
     <div>
-        <app-profile-header></app-profile-header>
+        <app-profile-header [author]="author"></app-profile-header>
         <!-- Grid container for aligning bio and new post -->
         <div class="row mt-3 row-gap-3">
-            <app-bio class="col-12 col-lg-4"></app-bio>
+            <app-bio class="col-12 col-lg-4" [userDetails]="userDetails"></app-bio>
             <div class="col-12 col-lg-8 mx-auto">
-              <app-new-post></app-new-post>
-                <app-post></app-post>
+              <app-new-post [user]="author"(newPost)="handleNewPost($event)"></app-new-post>
+                <app-post *ngFor="let post of posts" [post]="post"  ></app-post>
 
             </div>
         </div>

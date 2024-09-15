@@ -17,8 +17,15 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/signup`, { username,Firstname,Lastname,Email, password });
   }
 
-  getAuthor(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+   // Get basic author data
+   getUser(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/users/${id}`);
   }
-
+  // Get detailed user data
+  getUserDetails(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/users/${id}`);
+  }
+  getPosts(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/posts/${id}`);
+  }
   }

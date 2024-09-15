@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile-header',
@@ -6,6 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-header.component.css']
 })
 export class ProfileHeaderComponent {
-  name: string  = 'username';
-  username: string = '@user_name';
+  @Input() author: any;
 }

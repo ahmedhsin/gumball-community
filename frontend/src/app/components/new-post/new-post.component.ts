@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { PostService } from 'src/app/services/post.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-new-post',
@@ -7,25 +6,21 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./new-post.component.css']
 })
 export class NewPostComponent {
-  
-  constructor(private postService: PostService) {}
+  @Input() user: any;
+  @Output() newPost = new EventEmitter<any>();
+
   postContent: string = '';
   selectedFile: File | null = null;
-  imageSrc: string | ArrayBuffer | null = null; 
-  @Output() newPost = new EventEmitter<any>();
-   onCreatePost(data: any) {
-    data['image'] = this.imageSrc;
-    this.newPost.emit(data);
-    /*
-    this.postService.createPost(data).subscribe(
-      response => {
-        console.log('Created successful', response);
-      },
-      error => {
-        console.error('error', error);
-      }
-    );*/
-    this.imageSrc = null;
+  imageSrc: string | ArrayBuffer | null = null;
+
+  onCreatePost(formValue: any) {
+    const postData = {
+      content: this.postContent,
+      image: this.imageSrc,
+      user: this.user
+    };
+
+    this.newPost.emit(postData);
     this.resetForm();
   }
 
@@ -36,21 +31,21 @@ export class NewPostComponent {
 
     const fileInput = document.getElementById('file-input') as HTMLInputElement;
     if (fileInput) {
-      fileInput.value = ''; 
+      fileInput.value = '';
     }
-    document.getElementById('image-preview')?.classList.add('d-none');
+    const imagePreview = document.getElementById('image-preview') as HTMLImageElement;
+    if (imagePreview) {
+      imagePreview.classList.add('d-none');
+    }
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
-  
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const imagePreview: any = document.getElementById('image-preview');
-        imagePreview.src = e.target.result;
         this.imageSrc = e.target.result;
-        imagePreview.classList.remove('d-none');
       };
       reader.readAsDataURL(file);
     }
