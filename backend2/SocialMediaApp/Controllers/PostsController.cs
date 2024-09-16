@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SocialMediaApp.Controllers
@@ -15,16 +16,18 @@ namespace SocialMediaApp.Controllers
     public class PostsController : ControllerBase
     {
         private readonly SocialMediaContext _context;
-
-        public PostsController(SocialMediaContext context)
+        private readonly AuthService _authService;
+        public PostsController(SocialMediaContext context, AuthService authService)
         {
             _context = context;
+            _authService = authService;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<PostViewModel>>> GetAll()
         {
-            var userId = GetCurrentUserId();
+            var userId = _authService.GetCurrentUserId();
             var followedAuthorIds = await _context.AuthorFollows
                 .Where(af => af.FollowerId == userId)
                 .Select(af => af.FollowingId)
@@ -84,13 +87,14 @@ namespace SocialMediaApp.Controllers
                 Reactions = p.Reactions
                     .GroupBy(r => r.react)
                     .ToDictionary(g => g.Key, g => g.Count()),
-                React = p.Reactions.FirstOrDefault(r => r.AuthorId == GetCurrentUserId())?.react.ToString()
+                React = p.Reactions.FirstOrDefault(r => r.AuthorId == _authService.GetCurrentUserId())?.react.ToString()
             }).ToList();
 
             return Ok(postViewModels);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Create([FromBody] CreatePostViewModel model)
         {
             if (model == null)
@@ -115,7 +119,7 @@ namespace SocialMediaApp.Controllers
                 Content = model.Content,
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = imageUrl,
-                AuthorId = GetCurrentUserId()
+                AuthorId = _authService.GetCurrentUserId()
             };
 
             _context.Posts.Add(newPost);
@@ -154,13 +158,14 @@ namespace SocialMediaApp.Controllers
                 Reactions = post.Reactions
                     .GroupBy(r => r.react)
                     .ToDictionary(g => g.Key, g => g.Count()),
-                React = post.Reactions.FirstOrDefault(r => r.AuthorId == GetCurrentUserId())?.react.ToString()
+                React = post.Reactions.FirstOrDefault(r => r.AuthorId == _authService.GetCurrentUserId())?.react.ToString()
             };
 
             return Ok(postViewModel);
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var post = await _context.Posts.FindAsync(id);
@@ -168,6 +173,12 @@ namespace SocialMediaApp.Controllers
             if (post == null)
             {
                 return NotFound("Post not found");
+            }
+            var author = _authService.GetCurrentUserId();
+
+            if (post.AuthorId != author)
+            {
+                throw new UnauthorizedAccessException();
             }
 
             _context.Posts.Remove(post);
@@ -178,6 +189,7 @@ namespace SocialMediaApp.Controllers
 
         
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] UpdatePostViewModel updatedPost)
         {
             var post = await _context.Posts.FindAsync(id);
@@ -185,6 +197,12 @@ namespace SocialMediaApp.Controllers
             if (post == null)
             {
                 return NotFound("Post not found");
+            }
+            var author = _authService.GetCurrentUserId();
+
+            if (post.AuthorId != author)
+            {
+                throw new UnauthorizedAccessException();
             }
 
             post.Content = updatedPost.Content;
@@ -250,9 +268,6 @@ namespace SocialMediaApp.Controllers
 
             return null;
         }
-        private int GetCurrentUserId()
-        {
-            return 1;
-        }
+        
     }
 }

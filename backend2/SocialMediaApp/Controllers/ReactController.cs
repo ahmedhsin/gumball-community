@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Models;
@@ -10,14 +11,17 @@ namespace SocialMediaApp.Controllers
     public class ReactController : ControllerBase
     {
         private readonly SocialMediaContext _context;
+        private readonly AuthService _authService;
+
         private int GetCurrentUserId()
         {
             
             return 1;
         }
-        public ReactController(SocialMediaContext context)
+        public ReactController(SocialMediaContext context, AuthService authService)
         {
             _context = context;
+            _authService = authService;
         }
 
         
@@ -76,16 +80,18 @@ namespace SocialMediaApp.Controllers
 
         
         [HttpPut()]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] CreateReactViewModel model)
         {
+            var authorId = _authService.GetCurrentUserId();
             var react = await _context.Reactions
-                .FirstOrDefaultAsync(r => r.AuthorId == GetCurrentUserId() && r.PostId == model.PostId);
+                .FirstOrDefaultAsync(r => r.AuthorId == authorId && r.PostId == model.PostId);
             if (react == null)
             {
                 react = new React
                 {
                     react = model.React,
-                    AuthorId = GetCurrentUserId(),
+                    AuthorId = authorId,
                     PostId = model.PostId
                 };
                 _context.Reactions.Add(react);

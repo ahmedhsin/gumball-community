@@ -8,12 +8,23 @@ using SocialMediaApp.Models;
 public class AuthService
 {
     private readonly IConfiguration _configuration;
-
-    public AuthService(IConfiguration configuration)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
+    public AuthService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
         _configuration = configuration;
+        _httpContextAccessor = httpContextAccessor;
     }
-
+    public int GetCurrentUserId()
+    {
+        var user = _httpContextAccessor.HttpContext.User;
+        var userIdString = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (int.TryParse(userIdString, out int userId))
+        {
+            return userId;
+        }
+        throw new InvalidOperationException("User ID is not available or is not a valid integer.");
+    }
     public string GenerateJwtToken(Author author)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");

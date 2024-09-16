@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Models;
@@ -16,10 +17,12 @@ namespace SocialMediaApp.Controllers
             return 1;
         }
         private readonly SocialMediaContext _context;
+        private readonly AuthService _authService;
 
-        public CommentsController(SocialMediaContext context)
+        public CommentsController(SocialMediaContext context, AuthService authService)
         {
             _context = context;
+            _authService = authService;
         }
 
         [HttpGet("{postId}")]
@@ -36,6 +39,7 @@ namespace SocialMediaApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Comment>> CreateComment([FromBody] CreateCommentViewModel model)
         {
             var comment = new Comment
@@ -43,7 +47,7 @@ namespace SocialMediaApp.Controllers
                 Content = model.Content,
                 CreatedAt = DateTime.UtcNow,
                 PostId = model.PostId,
-                AuthorId = GetCurrentUserId(),
+                AuthorId = _authService.GetCurrentUserId(),
                 ParentId = model.ParentId
             };
 
@@ -54,6 +58,7 @@ namespace SocialMediaApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateComment(int id, [FromBody] UpdateCommentViewModel model)
         {
             var comment = await _context.Comments.FindAsync(id);
@@ -62,7 +67,12 @@ namespace SocialMediaApp.Controllers
             {
                 return NotFound("Comment not found");
             }
+            var author = _authService.GetCurrentUserId();
 
+            if (comment.AuthorId != author)
+            {
+                throw new UnauthorizedAccessException();
+            }
             comment.Content = model.Content;
 
             await _context.SaveChangesAsync();
@@ -78,6 +88,12 @@ namespace SocialMediaApp.Controllers
             if (comment == null)
             {
                 return NotFound("Comment not found");
+            }
+            var author = _authService.GetCurrentUserId();
+
+            if (comment.AuthorId != author)
+            {
+                throw new UnauthorizedAccessException();
             }
 
             _context.Comments.Remove(comment);
