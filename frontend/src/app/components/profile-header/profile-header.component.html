@@ -1,27 +1,27 @@
 <div class="profile-header">
-    <div class="container cover-container position-relative">
-        <img class="cover img-fluid" src="assets/images/post-img.png" alt="cover" />
+  <div class="container cover-container position-relative">
+      <img class="cover img-fluid" src="assets/images/post-img.png" alt="cover" />
 
-        <div>
-            <div class="overlay-div col-2 position-absolute bottom-0 end-0 p-3">
-                <img src="assets/images/profile.png" class="avatar-img img-fluid profile-pic me-3" alt="profile image">
-                    <div class="name-div">
-                        <h1 class="name mb-1">{{ name }}</h1>
-                        <span>{{ username }}</span>
-                    </div>
-            </div>
-            
-            <div class="follow-message-buttons col-7 d-flex justify-content-end mt-3">
-                <button class="btn follow-button d-flex align-items-center me-2">
-                    <i class="fa-regular fa-heart me-2"></i>
-                    Follow
-                </button>
-                <button class="btn message-button d-flex align-items-center">
-                    <i class="fa-regular fa-message me-2"></i>
-                    Message
-                </button>
-            </div>    
-        </div>
-                    
-    </div>
+      <!-- Center the entire overlay-div in the middle of the container -->
+      <div class="overlay-div col-12 p-3 d-flex align-items-center justify-content-between position-absolute start-50 translate-middle">
+          <!-- Profile Image and Name -->
+          <div class="d-flex align-items-center">
+              <img src="assets/images/profile.png" class="avatar-img img-fluid profile-pic me-3" alt="profile image">
+              <div class="name-div">
+                  <h1 class="name mb-1">{{ name }}</h1>
+                  <span>{{ username }}</span>
+              </div>
+          </div>
+
+          <!-- Follow and Message Buttons -->
+          <div class="follow-message-buttons d-flex ms-3">
+              <button class="btn follow-button d-flex align-items-center me-2">
+                  <i class="fa-regular fa-heart me-2"></i> Follow
+              </button>
+              <button class="btn message-button d-flex align-items-center">
+                  <i class="fa-regular fa-message me-2"></i> Message
+              </button>
+          </div>
+      </div>
+  </div>
 </div>
