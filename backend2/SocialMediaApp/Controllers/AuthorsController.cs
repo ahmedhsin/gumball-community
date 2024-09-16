@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Models;
@@ -95,13 +96,25 @@ namespace SocialMediaApp.Controllers
             }
 
             var token = _authService.GenerateJwtToken(author);
-            return Ok(new { token });
+            var data = new
+            {
+                Token = token,
+                Author = new AuthorViewModel
+                {
+                    ProfileImageUrl = author.ProfileImageUrl,
+                    Name = author.FirstName + ' ' + author.LastName,
+                    Email = author.Email,
+                    Id = author.Id
+                }
+            };
+            return Ok(data);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] CreateAuthorViewModel model)
+        [HttpPut()]
+        [Authorize]
+        public async Task<IActionResult> Update([FromBody] CreateAuthorViewModel model)
         {
-            var author = await _context.Authors.FindAsync(id);
+            var author = await _context.Authors.FindAsync(_authService.GetCurrentUserId());
 
             if (author == null)
             {

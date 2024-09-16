@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Models;
@@ -10,10 +11,12 @@ namespace SocialMediaApp.Controllers
     public class AuthorFollowController : ControllerBase
     {
         private readonly SocialMediaContext _context;
+        private readonly AuthService _authService;
 
-        public AuthorFollowController(SocialMediaContext context)
+        public AuthorFollowController(SocialMediaContext context, AuthService authService)
         {
             _context = context;
+            _authService = authService;
         }
 
         [HttpGet("followers/{authorId}")]
@@ -51,9 +54,10 @@ namespace SocialMediaApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CreateFollow([FromBody] CreateAuthorFollowerViewModel model)
         {
-            var currentUserId = GetCurrentUserId(); 
+            var currentUserId = _authService.GetCurrentUserId(); 
 
             var existingFollow = await _context.AuthorFollows
                 .Where(af => af.FollowerId == currentUserId && af.FollowingId == model.FollowingId)
@@ -77,9 +81,10 @@ namespace SocialMediaApp.Controllers
         }
 
         [HttpDelete("{followingId}")]
+        [Authorize]
         public async Task<IActionResult> Unfollow(int followingId)
         {
-            var currentUserId = GetCurrentUserId();
+            var currentUserId = _authService.GetCurrentUserId();
 
             var follow = await _context.AuthorFollows
                 .Where(af => af.FollowerId == currentUserId && af.FollowingId == followingId)
