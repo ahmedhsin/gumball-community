@@ -28,8 +28,8 @@
             <img *ngIf="post.react" src="assets/images/{{post.react}}.png" class="img-fluid self-react">
             <span *ngIf="!post.react"><i class="fa-regular fa-heart mx-1"></i>React</span>
         </div>
-        <div (click)="toggleComments()" class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Comment</div>
-        <div class="pointer col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Share</div>
+        <div (click)="toggleComments()" class="pointer col-3 align-items-center"><i class="fa-solid fa-comment  mx-1"></i>Comment</div>
+        <div class="pointer col-3 align-items-center"><i class="fa-solid fa-share mx-1"></i>Share</div>
     </div>
     <div *ngIf="isReactVisible" (click)="toggleReact()">
         <app-react [setReact]="setReact" [post]="post"></app-react>
@@ -47,14 +47,14 @@
         <span class="ms-4  pointer" *ngIf="comment.subComments.length > 0" (click)="toggleSubComments(comment)">
             {{ comment.showSubComments ? 'Hide all replay' : 'View all replay' }}
         </span>
-    
+
         <div *ngIf="comment.showSubComments" class="sub-comments ms-5">
             <ng-container *ngTemplateOutlet="nestedComments; context: { $implicit: comment.subComments }"></ng-container>
         </div>
         </div>
     </div>
 </div>
-  
+
 <ng-template #nestedComments let-subComments>
 <div *ngFor="let subComment of subComments">
     <div class="comment">
