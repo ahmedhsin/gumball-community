@@ -37,7 +37,11 @@ namespace SocialMediaApp
 				.WithMany(a => a.Followings)
 				.HasForeignKey(af => af.FollowingId)
 				.OnDelete(DeleteBehavior.Restrict); 
+			
+			
 			base.OnModelCreating(modelBuilder);
+			
+			
 
 		}
 	}
