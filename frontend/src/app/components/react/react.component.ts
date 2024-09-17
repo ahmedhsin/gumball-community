@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-react',
@@ -8,5 +9,7 @@ import { Component, Input } from '@angular/core';
 export class ReactComponent {
   @Input() setReact:any;
   @Input() post:any;
+
+  constructor(private postService: PostService){}
   
 }

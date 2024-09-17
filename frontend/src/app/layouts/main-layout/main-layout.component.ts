@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -6,8 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-layout.component.css']
 })
 export class MainLayoutComponent {
-  author:any = {
-    name: 'Ahmed Mubarak',
-    image: 'assets/images/profile.png'
-  }
+  constructor(private authService: AuthService){}
+  author: any = this.authService.getAuthor();
 }

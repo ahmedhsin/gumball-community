@@ -8,6 +8,15 @@ using SocialMediaApp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder => builder
+            .WithOrigins("http://localhost:4200") // Add allowed origins here
+            .AllowAnyMethod() // Allow any HTTP method
+            .AllowAnyHeader() // Allow any header
+            .AllowCredentials()); // Allow credentials
+});
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddControllers();
@@ -79,6 +88,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();

@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { environment } from 'environment';
+import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -8,23 +10,33 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class NewPostComponent {
   
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService,private authService: AuthService) {}
+  @Input() author:any;
+  url = environment.url
   postContent: string = '';
   selectedFile: File | null = null;
+  imageFile:any;
   imageSrc: string | ArrayBuffer | null = null; 
   @Output() newPost = new EventEmitter<any>();
+
+
    onCreatePost(data: any) {
-    data['image'] = this.imageSrc;
-    this.newPost.emit(data);
-    /*
-    this.postService.createPost(data).subscribe(
-      response => {
-        console.log('Created successful', response);
+    const formData = new FormData();
+    if (this.imageFile)
+      formData.append('imageFile', this.imageFile, this.imageFile.name);
+    formData.append('content', data.content);    
+    this.postService.createPost(formData).subscribe(
+      res => {
+        res['author'] = this.authService.getAuthor();
+        res['comments'] = []
+        res['reactions'] = []
+        res['createdAt'] = 'now'
+        this.newPost.emit(res);
       },
       error => {
         console.error('error', error);
       }
-    );*/
+    );
     this.imageSrc = null;
     this.resetForm();
   }
@@ -43,7 +55,7 @@ export class NewPostComponent {
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
-  
+    this.imageFile = file;
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {

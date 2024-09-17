@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://api.escuelajs.co/api/v1/auth'; // Your API endpoint
+  private apiUrl = environment.apiUrl + '/authors';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
@@ -17,7 +18,6 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  // Login method
   login(email: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(map(user => {
@@ -29,28 +29,38 @@ export class AuthService {
   }
 
   siginUp(data:any) {
-    return this.http.post<any>(`${this.apiUrl}/signup`, data)
+    return this.http.post<any>(`${this.apiUrl}`, data)
       .pipe(map(user => {
         return user;
       }));
   }
 
-  // Logout method
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']); // redirect to login page
+    this.router.navigate(['/login']); 
   }
 
-  // Check if user is authenticated
   public get isAuthenticated(): boolean {
     return !!localStorage.getItem('currentUser');
   }
 
-  // Get token
   getToken(): string | null {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
     return currentUser?.token;
+  }
+
+  getAuthor(): any {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    return currentUser?.author;
+  }
+  getFollowers(): any {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    return currentUser?.followers;
+  }
+
+  getFollowing(): any {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    return currentUser?.following;
   }
 }

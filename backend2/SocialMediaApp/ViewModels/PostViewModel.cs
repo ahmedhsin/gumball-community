@@ -8,7 +8,7 @@ namespace SocialMediaApp.ViewModels
         public string Title { get; set; }
         public string Content { get; set; }
         public string React { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         public AuthorViewModel? Author { get; set; }
         public List<CommentViewModel> Comments { get; set; }
         

@@ -1,25 +1,25 @@
-<div class="post-container bg-secondary my-4 bg-opacity-50">
-    <app-edit-post *ngIf="isEditing" [post]="post" (updatePost)="handleUpdate($event)"></app-edit-post>
+<div class="post-container post-{{post.id}} bg-secondary my-4 bg-opacity-50">
+        <app-edit-post *ngIf="isEditing" [post]="post" (updatePost)="handleUpdate($event)"></app-edit-post>
 
     <div class="row mb-3 justify-content-between align-items-center">
         <div class="col">
             <div class="user-section d-flex gap-2">
-                <img src="{{post.profile}}" class="avatar-img img-fluid" alt="" srcset="">
-                <div class="info d-flex flex-column gap-1">
-                    <span>{{post.name}}</span>
-                    <span>{{post.date}}</span>
-                </div>
+                <img src="{{url}}{{post.author.profileImageUrl}}" class="avatar-img img-fluid" alt="" srcset="">
+                <a href="/profile/{{post.author.id}}" class="info d-flex flex-column gap-1">
+                    <span>{{post.author.name}}</span>
+                    <span>{{post.createdAt}}</span>
+                </a>
             </div>
         </div>
         <div class="col-1">
-            <span class="fs-2 pointer">
+            <span *ngIf="post.author.id==author.id" class="fs-2 pointer">
                 <i class="fa-solid fa-ellipsis-vertical" (click)="startEditing(post)"></i>
             </span>
         </div>
     </div>
     <div class="row gap-2">
         <div class="col">{{post.content}}</div>
-        <img src="{{post.image}}" alt="" class="img-fluid">
+        <img src="{{url}}{{post.imageUrl}}" alt="" class="img-fluid">
     </div>
     <hr>
     <app-reaction-list [reactions]="post.reactions"></app-reaction-list>
@@ -39,10 +39,10 @@
 
 
 <div *ngIf="isCommentsVisible" class="comments">
-    <app-add-comment [addReply]="addComment" [parentComment]="post.comments"></app-add-comment>
+    <app-add-comment [post]="post" [addReply]="addComment" [parentComment]="post.comments"></app-add-comment>
     <div *ngFor="let comment of post.comments">
         <div class="comment">
-        <app-comment [comment]="comment"></app-comment>
+        <app-comment  [post]="post"  [comment]="comment"></app-comment>
 
         <span class="ms-4  pointer" *ngIf="comment.subComments.length > 0" (click)="toggleSubComments(comment)">
             {{ comment.showSubComments ? 'Hide all replay' : 'View all replay' }}
@@ -58,7 +58,7 @@
 <ng-template #nestedComments let-subComments>
 <div *ngFor="let subComment of subComments">
     <div class="comment">
-    <app-comment [comment]="subComment" ></app-comment>
+    <app-comment  [post]="post"  [comment]="subComment" ></app-comment>
 
 
     <span class="ms-4 pointer" *ngIf="subComment.subComments.length > 0" (click)="toggleSubComments(subComment)">

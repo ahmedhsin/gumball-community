@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { environment } from 'environment';
+import { AuthorService } from 'src/app/services/author.service';
 
 @Component({
   selector: 'app-chats-box',
@@ -6,36 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./chats-box.component.css']
 })
 export class ChatsBoxComponent {
-  users = [
-    {
-      name:"Ahmed Mubarak",
-      img: "assets/images/profile.png",
-      id:1
-    },
-    {
-      name:"Ahmed Mubarak 2",
-      img: "assets/images/profile.png",
-      id:2
-    },
-    {
-      name:"Ahmed Mubarak 3",
-      img: "assets/images/profile.png",
-      id:3
-    },
-    {
-      name:"Ahmed Mubarak 4",
-      img: "assets/images/profile.png",
-      id:4
-    },
-    {
-      name:"Ahmed Mubarak 5",
-      img: "assets/images/profile.png",
-      id:5
-    },
-    {
-      name:"Ahmed Mubarak 6",
-      img: "assets/images/profile.png",
-      id:6
-    }
-  ]
+  authors:any = []
+  constructor(private authorService: AuthorService){}
+  url = environment.url;
+  ngOnInit(): void {
+    this.authorService.getAuthors().subscribe((res: any) => {
+      this.authors = [...res]
+      console.log(res);
+    })
+    
+  }
 }
