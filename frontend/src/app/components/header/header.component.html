@@ -10,12 +10,14 @@
             </div>
             <span class="bell-icon text-bg-secondary bg-opacity-50"><i class="fa-solid fa-bell"></i></span>
         </div>
-        <div class="col-3 text-bg-secondary bg-opacity-50 ms-auto user-card d-flex justify-content-between align-items-center">
+        <div class="col-3 text-bg-secondary bg-opacity-50 ms-auto user-card d-block d-lg-flex  justify-content-between align-items-center">
             <a *ngIf="isAuthenticated" href="/profile/{{author.id}}" class=" text-decoration-none avatar d-flex align-items-center gap-2" >
                 <img src="{{url}}{{author.profileImageUrl}}" alt="" class="d-none d-lg-block img-fluid">
                 <span class="text-white">{{author.name}}</span>
             </a>
-            <span *ngIf="isAuthenticated" class="pointer" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span *ngIf="isAuthenticated" class="pointer d-none d-lg-block" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <button *ngIf="isAuthenticated" class=" btn btn-secondary  pointer d-block d-lg-none" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+
             <div *ngIf="!isAuthenticated" class="d-flex gap-3">
                 <a href="/login" class="btn btn-outline-secondary btn-primary text-white rounded-3">Login</a>
                 <a href="/signup" class="btn btn-outline-secondary btn-primary text-white rounded-3">SignUp</a>

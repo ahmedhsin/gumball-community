@@ -25,7 +25,7 @@ export class CommentComponent {
       content: replyText,
       parentId:comment.id
     }).subscribe((res: any) => {
-      console.log(res)
+      res['createdAt'] = 'now';
       comment.subComments.push({
         ...res,
         author: this.authService.getAuthor(),
@@ -55,7 +55,7 @@ export class CommentComponent {
         content:updatedComment.content
       }).subscribe((res)=>{
         this.comment = updatedComment;
-        this.comment.date = 'now';
+        this.comment.createdAt = 'now';
       })
     }
     this.isEditingComment = false; 

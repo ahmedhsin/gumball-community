@@ -31,6 +31,7 @@ export class PostComponent {
       postId: this.post.id,
       content: comment
     }).subscribe((res: any) => {
+      res['createdAt'] = 'now'
       comments.push({
         ...res,
         author: this.authService.getAuthor(),
