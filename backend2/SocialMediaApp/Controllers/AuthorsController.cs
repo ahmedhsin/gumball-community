@@ -66,7 +66,7 @@ namespace SocialMediaApp.Controllers
             [FromForm] string password)
         {
             
-            string imageUrl = "profile.png";
+            string imageUrl = "/images/profile.png";
             if (imageFile != null)
             {
                 // Ensure directory exists
