@@ -6,7 +6,7 @@
             </div>
             <div class="col-10">
                 <textarea class="post-textarea" name="content" id="content" placeholder="Dude, say it, don't spray it!" [(ngModel)]="postContent" required></textarea>
-                
+
                 <img id="image-preview" name="image" src="#" alt="Image Preview" class="w-100 mx-auto img-fluid my-2 d-none" width="100">
             </div>
             <div class="d-flex justify-content-end">
@@ -17,12 +17,12 @@
         <div class="row justify-content-around align-items-center">
             <div class="col-3 align-items-center file-upload">
                 <label for="file-input">
-                    <i class="fa-regular fa-heart mx-1"></i>Photo
+                    <i class="fa-soild fa-image  mx-1"></i>Photo
                 </label>
                 <input type="file"  name="image" [(ngModel)]="selectedFile" id="file-input" class="d-none" (change)="onFileSelected($event)">
             </div>
-            <div class="col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Video</div>
-            <div class="col-3 align-items-center"><i class="fa-regular fa-heart mx-1"></i>Share</div>
+            <div class="col-3 align-items-center"><i class="fa-soild fa-video mx-1"></i>Video</div>
+            <div class="col-3 align-items-center"><i class="fa-soild fa-share mx-1"></i>Share</div>
         </div>
     </form>
 </div>
