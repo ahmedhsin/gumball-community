@@ -1,11 +1,13 @@
 <div class="container">
     <div>
-        <app-profile-header></app-profile-header>
+        <app-profile-header [isFollower]="isFollower" [author]="author"></app-profile-header>
         <!-- Grid container for aligning bio and new post -->
         <div class="row mt-3 row-gap-3">
             <app-bio class="col-12 col-lg-4"></app-bio>
             <div class="col-12 col-lg-8 mx-auto">
-                <app-post></app-post>
+                <div *ngFor="let post of posts">
+                    <app-post [post]="post"></app-post>
+                </div>
             </div>
         </div>
     </div>

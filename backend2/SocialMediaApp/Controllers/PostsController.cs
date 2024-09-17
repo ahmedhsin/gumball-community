@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -46,11 +47,13 @@ namespace SocialMediaApp.Controllers
             {
                 Id = p.Id,
                 Content = p.Content,
-                CreatedAt = p.CreatedAt,
+                CreatedAt = p.CreatedAt.Humanize(),
+                ImageUrl = p.ImageUrl,
                 Author = new AuthorViewModel
                 {
                     Id = p.Author.Id,
-                    Name = p.Author.FirstName + ' ' + p.Author.LastName
+                    Name = p.Author.FirstName + ' ' + p.Author.LastName,
+                    ProfileImageUrl = p.Author.ProfileImageUrl
                 },
                 Comments = MapComments(p.Comments),
                 Reactions = p.Reactions
@@ -76,12 +79,15 @@ namespace SocialMediaApp.Controllers
             var postViewModels = posts.Select(p => new PostViewModel
             {
                 Id = p.Id,
+                ImageUrl = p.ImageUrl,
                 Content = p.Content,
-                CreatedAt = p.CreatedAt,
+                CreatedAt = p.CreatedAt.Humanize(),
                 Author = new AuthorViewModel
                 {
                     Id = p.Author.Id,
-                    Name = p.Author.FirstName + ' ' + p.Author.LastName
+                    Name = p.Author.FirstName + ' ' + p.Author.LastName,
+                    ProfileImageUrl = p.Author.ProfileImageUrl
+                    
                 },
                 Comments = MapComments(p.Comments),
                 Reactions = p.Reactions
@@ -95,28 +101,40 @@ namespace SocialMediaApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Create([FromBody] CreatePostViewModel model)
+        public async Task<ActionResult> Create([FromForm] IFormFile? imageFile, [FromForm] string content)
         {
-            if (model == null)
+            if (content == null && imageFile == null)
             {
                 return BadRequest("Post model cannot be null.");
             }
 
             string imageUrl = "";
-            if (model.ImageFile != null)
+            if (imageFile != null)
             {
-                var filePath = Path.Combine("wwwroot/images", model.ImageFile.FileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // Ensure directory exists
+                var uploadPath = Path.Combine("wwwroot", "images");
+                if (!Directory.Exists(uploadPath))
                 {
-                    await model.ImageFile.CopyToAsync(stream);
+                    Directory.CreateDirectory(uploadPath);
                 }
 
-                imageUrl = $"/images/{model.ImageFile.FileName}";
+                // Generate a unique file name to avoid overwriting
+                var fileName = Path.GetFileName(imageFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
+                var filePath = Path.Combine(uploadPath, uniqueFileName);
+
+                // Save the file
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                // Generate the URL to access the image
+                imageUrl = $"/images/{uniqueFileName}";
             }
             var newPost = new Post
             {
-                Content = model.Content,
+                Content = content,
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = imageUrl,
                 AuthorId = _authService.GetCurrentUserId()
@@ -147,7 +165,8 @@ namespace SocialMediaApp.Controllers
             {
                 Id = post.Id,
                 Content = post.Content,
-                CreatedAt = post.CreatedAt,
+                CreatedAt = post.CreatedAt.Humanize(),
+                ImageUrl = post.ImageUrl,
                 Author = new AuthorViewModel
                 {
                     Id = post.Author.Id,
@@ -219,7 +238,7 @@ namespace SocialMediaApp.Controllers
                 {
                     Id = c.Id,
                     Content = c.Content,
-                    CreatedAt = c.CreatedAt,
+                    CreatedAt = c.CreatedAt.Humanize(),
                     Author = new AuthorViewModel
                     {
                         Id = c.Author.Id,
@@ -241,7 +260,7 @@ namespace SocialMediaApp.Controllers
             {
                 Id = c.Id,
                 Content = c.Content,
-                CreatedAt = c.CreatedAt,
+                CreatedAt = c.CreatedAt.Humanize(),
                 Author = new AuthorViewModel
                 {
                     Id = c.Author.Id,

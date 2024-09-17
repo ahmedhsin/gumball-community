@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { environment } from 'environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -6,8 +9,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent {
+  constructor(private postService: PostService,private authService: AuthService){}
   @Input() post: any = {}
-  
+  author = this.authService.getAuthor();
+  url = environment.url
   isReactVisible = false;
   isCommentsVisible = false;
   toggleReact() {
@@ -22,15 +27,19 @@ export class PostComponent {
   }
 
   addComment(comments:any, comment: any){
-    comments.push({
-      img: 'assets/images/profile.png',
-      name: 'Imposter John',
-      comment: comment,
-      date: '3 hours ago',
-      subComments: [],
-      showSubComments: false,
-      showReplyForm: false
+    this.postService.addComment({
+      postId: this.post.id,
+      content: comment
+    }).subscribe((res: any) => {
+      comments.push({
+        ...res,
+        author: this.authService.getAuthor(),
+        subComments: [],
+        showSubComments: false,
+        showReplyForm: false
+      })
     })
+    
   }
   setReact(react: any){
     if(this.post.react){
@@ -43,15 +52,28 @@ export class PostComponent {
       this.post.reactions[react] += 1;
     }
     
+    this.postService.addReact(react, this.post.id).subscribe((res: any) => {})    
   }
   
   isEditing: boolean = false;
 
   handleUpdate(updatedPost: any) {
+    console.log(updatedPost)
     if (updatedPost) {
-      this.post = updatedPost;
+      if (updatedPost == 'delete'){
+        this.postService.deletePost(this.post.id).subscribe((res)=>{
+          document.querySelector('.post-'+this.post.id)?.classList.add('d-none');
+        })
+      }else{
+        this.postService.updatePost(this.post.id, {
+          content:updatedPost.content
+        }).subscribe((res)=>{
+          this.post.content = updatedPost.content;
+          this.post.createdAt = 'now'
+        })
+      }
     }
-    this.isEditing = false; // Hide the edit form
+    this.isEditing = false;
   }
 
   startEditing(post: any) {

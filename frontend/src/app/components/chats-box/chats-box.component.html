@@ -1,17 +1,17 @@
 <div
   class="Chatsbox-container  bg-secondary bg-opacity-50 d-flex flex-column align-items-start p-4"
 >
-  <div class="chats mb-4">Chats</div>
+  <div class="chats mb-4">Gumball People</div>
 
   <div class="Chats-container custom-scrollbar">
-    <div *ngFor="let user of users" class="">
-      <a href="profile/{{user.id}}" class="btn chatsholder avatar d-flex align-items-center gap-2 mb-4 ">
+    <div *ngFor="let author of authors" class="">
+      <a href="profile/{{author.id}}" class="btn chatsholder avatar d-flex align-items-center gap-2 mb-4 ">
         <img
-          src="{{user.img}}"
+          src="{{url}}{{author.profileImageUrl}}"
           alt="Profile Image"
           class="img-fluid"
         />
-        <span>{{user.name}}</span>
+        <span>{{author.name}}</span>
       </a>
     </div>
   </div>

@@ -27,7 +27,8 @@ namespace SocialMediaApp.Controllers
                 {
                     Id = a.Id,
                     Name = a.FirstName + ' ' + a.LastName,
-                    Email = a.Email
+                    Email = a.Email,
+                    ProfileImageUrl = a.ProfileImageUrl
                 })
                 .ToListAsync();
 
@@ -43,7 +44,8 @@ namespace SocialMediaApp.Controllers
                 {
                     Id = a.Id,
                     Name = a.FirstName + ' ' + a.LastName,
-                    Email = a.Email
+                    Email = a.Email,
+                    ProfileImageUrl = a.ProfileImageUrl
                 })
                 .FirstOrDefaultAsync();
 
@@ -56,35 +58,51 @@ namespace SocialMediaApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreateAuthorViewModel model)
+        public async Task<ActionResult> Create(
+            [FromForm] IFormFile? imageFile,
+            [FromForm] string firstName,
+            [FromForm] string lastName,
+            [FromForm] string email,
+            [FromForm] string password)
         {
             
             string imageUrl = "profile.png";
-            if (model.ImageFile != null)
+            if (imageFile != null)
             {
-                var filePath = Path.Combine("wwwroot/images", model.ImageFile.FileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // Ensure directory exists
+                var uploadPath = Path.Combine("wwwroot", "images");
+                if (!Directory.Exists(uploadPath))
                 {
-                    await model.ImageFile.CopyToAsync(stream);
+                    Directory.CreateDirectory(uploadPath);
                 }
 
-                
-                imageUrl = $"/images/{model.ImageFile.FileName}";
+                // Generate a unique file name to avoid overwriting
+                var fileName = Path.GetFileName(imageFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
+                var filePath = Path.Combine(uploadPath, uniqueFileName);
+
+                // Save the file
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                // Generate the URL to access the image
+                imageUrl = $"/images/{uniqueFileName}";
             }
             var author = new Author
             {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
                 ProfileImageUrl = imageUrl,
-                Password = BCrypt.Net.BCrypt.HashPassword(model.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(password)
             };
 
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
 
-            return Ok("User registered");
+            return Ok();
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginModel model)
@@ -106,6 +124,7 @@ namespace SocialMediaApp.Controllers
                     Email = author.Email,
                     Id = author.Id
                 }
+
             };
             return Ok(data);
         }

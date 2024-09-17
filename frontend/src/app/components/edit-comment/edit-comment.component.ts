@@ -13,14 +13,13 @@ export class EditCommentComponent {
   editedComment: string = '';
 
   ngOnInit() {
-    // Initialize form with comment content
-    this.editedComment = this.comment.comment;
+    this.editedComment = this.comment.content;
   }
 
   onUpdateComment() {
     const updatedComment = {
       ...this.comment,
-      comment: this.editedComment
+      content: this.editedComment
     };
     this.updateComment.emit(updatedComment);
   }

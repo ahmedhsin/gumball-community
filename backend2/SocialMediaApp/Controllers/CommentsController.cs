@@ -1,3 +1,4 @@
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -110,7 +111,7 @@ namespace SocialMediaApp.Controllers
                 {
                     Id = c.Id,
                     Content = c.Content,
-                    CreatedAt = c.CreatedAt,
+                    CreatedAt = c.CreatedAt.Humanize(),
                     Author = new AuthorViewModel
                     {
                         Id = c.Author.Id,
@@ -130,7 +131,7 @@ namespace SocialMediaApp.Controllers
                         {
                             Id = comment.Id,
                             Content = comment.Content,
-                            CreatedAt = comment.CreatedAt,
+                            CreatedAt = comment.CreatedAt.Humanize(),
                             Author = new AuthorViewModel
                             {
                                 Id = comment.Author.Id,

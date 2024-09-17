@@ -52,6 +52,17 @@ namespace SocialMediaApp.Controllers
 
             return Ok(result);
         }
+        
+        [HttpGet("isfollowing/{authorId}")]
+        [Authorize]
+        public async Task<ActionResult> IsFollowers(int authorId)
+        {
+            var currentUserId = _authService.GetCurrentUserId();
+            var existingFollow = await _context.AuthorFollows
+                .Where(af => af.FollowerId == currentUserId && af.FollowingId == authorId)
+                .FirstOrDefaultAsync();
+            return Ok(existingFollow);
+        }
 
         [HttpPost]
         [Authorize]

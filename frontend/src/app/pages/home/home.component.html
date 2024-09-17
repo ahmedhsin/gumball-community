@@ -11,12 +11,12 @@
     <div class="row ">
         <div class="col-2 p-0 d-none d-lg-block">
             <div class="position-sticky" style="top: 100px;">
-                <app-side-nav ></app-side-nav>
+            <app-side-nav></app-side-nav>
             </div>
         </div>
         <div class=" mt-1 col-12 col-lg-7 d-flex flex-column gap-3  ">
 
-            <app-new-post (newPost)="handleNewPost($event)"></app-new-post>
+            <app-new-post [author]="author" (newPost)="handleNewPost($event)"></app-new-post>
             <div *ngFor="let post of posts">
                 <app-post [post]="post"></app-post>
             </div>

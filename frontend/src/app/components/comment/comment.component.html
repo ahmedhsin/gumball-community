@@ -1,19 +1,22 @@
-<div class="container comment-container  my-2 ">
+<div class="container comment-container comment-{commend.id}  my-2 ">
     <div class="row">
         <div class="vertical-line"></div>
         <div class="col-2">
-            <img src="{{comment.img}}" class="img-fluid avatar-img" alt="">
+            <img src="{{url}}{{comment.author.profileImageUrl}}" class="img-fluid avatar-img" alt="">
         </div>
         <div class="col-10 py-2 sub-comment">
-            <app-edit-comment *ngIf="isEditingComment" [comment]="currentComment" (updateComment)="handleUpdateComment($event)" (cancelEdit)="cancelEdit()" ></app-edit-comment>
-            <div class="d-flex flex-column">
-                <span>{{comment.name}}</span>
-                <span class="ms-2">{{comment.date}}</span>
+            <div *ngIf="comment.author.id==author.id">
+
+                <app-edit-comment  *ngIf="isEditingComment" [comment]="currentComment" (updateComment)="handleUpdateComment($event)" (cancelEdit)="cancelEdit()" ></app-edit-comment>
             </div>
-            <p class="ms-3">{{comment.comment}}</p>
+            <div class="d-flex flex-column">
+                <span>{{comment.author.name}}</span>
+                <span class="ms-2">{{comment.createdAt}}</span>
+            </div>
+            <p class="ms-3">{{comment.content}}</p>
             <div class="d-flex justify-content-center">
                 <span (click)="toggleReplyForm(comment)" class="me-2 replay pointer">{{comment.showReplyForm ? 'Cancel' : 'Reply'}}</span>
-                <span (click)="startEditing(comment)"  class="text-danger pointer"> Edit </span>
+                <span *ngIf="comment.author.id==author.id" (click)="startEditing(comment)"  class="text-danger pointer"> Edit </span>
                 
             </div>
         </div>        
@@ -21,6 +24,6 @@
 </div>
 
 <div *ngIf="comment.showReplyForm" class="reply-form">
-    <app-add-comment [addReply]="addReply" [parentComment]="comment"></app-add-comment>
+    <app-add-comment [post]="post" [addReply]="addReply" [parentComment]="comment"></app-add-comment>
 </div>
 

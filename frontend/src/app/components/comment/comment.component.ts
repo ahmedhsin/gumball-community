@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { environment } from 'environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-comment',
@@ -7,22 +10,30 @@ import { Component, Input } from '@angular/core';
 })
 export class CommentComponent {
   @Input() comment: any = {};
-
+  @Input() post: any = {};
+  url = environment.url;
+  constructor(private postService: PostService,private authService: AuthService){}
+  author = this.authService.getAuthor()
   toggleReplyForm(comment: any) {
     comment.showReplyForm = !comment.showReplyForm;
   }
 
   addReply(comment: any, replyText: string) {
-    comment.subComments.push({
-      img: 'assets/images/profile.png',
-      name: 'Deo John',
-      comment: replyText,
-      date: '3 hours ago',
-      subComments: [],
-      showSubComments: false,
-      showReplyForm: false
-    });
-    comment.showReplyForm = false;
+
+    this.postService.addComment({
+      postId: this.post.id,
+      content: replyText,
+      parentId:comment.id
+    }).subscribe((res: any) => {
+      console.log(res)
+      comment.subComments.push({
+        ...res,
+        author: this.authService.getAuthor(),
+        subComments: [],
+        showSubComments: false,
+        showReplyForm: false
+      })
+    })
   }
 
   isEditingComment: boolean = false;
@@ -35,11 +46,17 @@ export class CommentComponent {
 
   handleUpdateComment(updatedComment: any) {
     if (updatedComment === 'delete') {
-      document.querySelector('.container')?.classList.add('d-none');
-      this.isEditingComment = false;
+      this.postService.deleteComment(this.comment.id).subscribe((res: any) => {
+        document.querySelector('.comment-'+this.comment.id)?.classList.add('d-none');
+        this.isEditingComment = false;
+      })
     }else if (updatedComment) {
-      this.comment = updatedComment;
-      this.comment.date = 'now';
+      this.postService.updateComment(this.comment.id, {
+        content:updatedComment.content
+      }).subscribe((res)=>{
+        this.comment = updatedComment;
+        this.comment.date = 'now';
+      })
     }
     this.isEditingComment = false; 
   }

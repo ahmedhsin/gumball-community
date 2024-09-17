@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +9,53 @@ import { Observable } from 'rxjs';
 export class PostService {
 
   constructor(private http: HttpClient) { }
-
+  url = environment.apiUrl + '/posts';
+  react_url = environment.apiUrl + '/react'
+  comment_url = environment.apiUrl + '/comments'
   getPosts() {
-    let url = 'https://tw6d1qml-44386.uks1.devtunnels.ms/api/Posts'
-    let headers = new HttpHeaders().set('X-Tunnel-Authorization', 'tunnel eyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fgeyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fg')
-    return this.http.get(url, { headers })
-   }
+    return this.http.get(this.url)
+  }
+
+  getPost(id:any){
+    return this.http.get(this.url+'/'+id);
+  }
+  getPostsByAuthor(id:any){
+    return this.http.get(this.url+'/author/'+id);
+  }
 
   createPost(data:any): Observable<any> {
-    let url = 'https://tw6d1qml-44386.uks1.devtunnels.ms/api/Posts'
-    let headers = new HttpHeaders().set('X-Tunnel-Authorization', 'tunnel eyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fgeyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fg')
-    return this.http.post(url, { headers }, data)
+    return this.http.post(this.url, data)
    }
 
-  deletePost() { }
+  deletePost(id:any) {
+    return this.http.delete(this.url+'/'+id)
+  }
 
-  addComment() { }
+  updatePost(id:any, data:any) {
+    return this.http.put(this.url+'/'+id, data)
+  }
 
-  deleteComment() { }
+  addComment(data: any) {
+    console.log(data)
+    return this.http.post(this.comment_url, data)
+  }
 
-  addReact(react:any) {
-    let url = 'https://tw6d1qml-44386.uks1.devtunnels.ms/api/Posts'
-    let headers = new HttpHeaders().set('X-Tunnel-Authorization', 'tunnel eyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fgeyJhbGciOiJFUzI1NiIsImtpZCI6IkI5Mjg5QzBFRDIyMUJENjhBNTA3MjA3MzY4MEI1MjFDRDVGRTEyQzIiLCJ0eXAiOiJKV1QifQ.eyJjbHVzdGVySWQiOiJ1a3MxIiwidHVubmVsSWQiOiJraW5kLXJpdmVyLTdndmIzam4iLCJzY3AiOiJjb25uZWN0IiwiZXhwIjoxNzI0ODQxODc1LCJpc3MiOiJodHRwczovL3R1bm5lbHMuYXBpLnZpc3VhbHN0dWRpby5jb20vIiwibmJmIjoxNzI0NzU0NTc1fQ.o-STVTd3fRAVnAL5TD-H6gEU4fXwalVTmqojP2JgA8uWKY51BLZg5mrBVgnoc1xlTKtBioz8AuH8wnQW-eo_fg')
-    return this.http.post(url, { headers }, react)
+  deleteComment(id:any) {
+    return this.http.delete(this.comment_url+'/'+id)
+  }
+
+  updateComment(id:any, data:any) {
+    console.log(data)
+    return this.http.put(this.comment_url+'/'+id, data)
+  }
+
+  addReact(react:any, postId: any) {
+    const data = {
+      react,
+      postId
+    }
+    console.log(data)
+    return this.http.put(this.react_url, data)
   }
 
 }

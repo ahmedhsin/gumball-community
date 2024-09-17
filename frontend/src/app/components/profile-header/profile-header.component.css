@@ -43,13 +43,11 @@
 }
 
 .overlay-div{
-    width: 80% !important;
     position: absolute;
     top: 170px;
     display: flex;
     align-items: end;
     line-height: 10px;
-    width: 80%;
 }
 
 .profile-pic {
